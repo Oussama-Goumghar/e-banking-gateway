@@ -39,6 +39,7 @@ pipeline {
         }
         stage('backend tests') {
             steps {
+                 script {
                 try {
                     sh "./mvnw -ntp verify -P-webapp"
                 } catch(err) {
@@ -46,11 +47,13 @@ pipeline {
                 } finally {
                     junit '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
                 }
+                 }
             }
         }
 
         stage('frontend tests') {
             steps {
+                 script {
                 try {
                     sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'"
                 } catch(err) {
@@ -58,6 +61,7 @@ pipeline {
                 } finally {
                     junit '**/target/test-results/TESTS-results-jest.xml'
                 }
+                 }
             }
         }
 
@@ -75,12 +79,13 @@ pipeline {
             }
         }
 
-        def dockerImage
+        // def dockerImage
         stage('publish docker') {
             steps {
+                // def dockerImage
                 // A pre-requisite to this step is to setup authentication to the docker registry
                 // https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
-                sh "./mvnw -ntp -Pprod verify jib:build"
+                sh "./mvnw -ntp -Pprod verify jib:build -Djib.to.image=brahimafa/gateway"
             }
         }
     }
