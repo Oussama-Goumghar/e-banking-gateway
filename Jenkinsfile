@@ -73,7 +73,7 @@ pipeline {
         }
         stage('quality analysis') {
             steps {
-                withSonarQubeEnv('https://sonar.afassy.tech') {
+                withSonarQubeEnv('Gatway-microservice') {
                     sh "./mvnw -ntp initialize sonar:sonar"
                 }
             }
