@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 pipeline {
 
-agent any
+node { label 'build' }
 stages {
     stage('checkout') {
         checkout scm
