@@ -58,7 +58,7 @@ pipeline {
                 } finally {
                     junit '**/target/test-results/TESTS-results-jest.xml'
                 }
-            ]
+            }
         }
 
         stage('packaging') {
